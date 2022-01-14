@@ -38,7 +38,9 @@ contract MicropaymentChannel is SignatureValidator {
         require(block.timestamp > orderTime, "You can't claim payment at the moment");
         _;
     }
-
+    
+    
+    //FUNCTIONS
     function claimPayment(bytes memory _signature, bytes32 _msgHash, uint256 _amount) public onlyRecipient orderingExpired {
         bytes32 msgBytes = getEthSignedHash(_msgHash);
         require(verify(msgBytes, _signature) == owner, "Invalid Address output");
