@@ -6,7 +6,6 @@
         <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
         <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
         <link rel="stylesheet" type="text/css" href="skeleton.css" media="screen" />
-        <link rel="icon" type="image/x-icon" href="./icons/favicon.ico">
         <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
         type="application/javascript">
@@ -35,10 +34,6 @@
           </p>
         <script>
           let count = 0;
-          let sign;
-          window.sign = sign;
-          let hash;
-          window.hash = hash;
     
           async function orderEspresso() {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -60,7 +55,7 @@
             const signature = await signer.signMessage(ordBytes);
             count += 0.01;
     
-            alert("Your signature:\n", signature, "\nMessage Hash:\n", ord);
+            console.log"Your signature:\n", signature, "\nMessage Hash:\n", ord);
             document.getElementById("counter").innerHTML = count;
           }
     
@@ -107,8 +102,8 @@
             }
 
             
-            document.getElementById("btn-claim").onclick = claimPayment;
-            document.getElementById("btn-deposit").onclick = depositFunds;
+          document.getElementById("btn-claim").onclick = claimPayment;
+          document.getElementById("btn-deposit").onclick = depositFunds;
           document.getElementById("btn-espresso").onclick = orderEspresso;
           document.getElementById("btn-americano").onclick = orderAmericano;
           document.getElementById("btn-latte").onclick = orderLatte;
