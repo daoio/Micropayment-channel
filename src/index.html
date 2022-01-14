@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Micropayment Channel</title>
+        <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+        <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+        <link rel="stylesheet" type="text/css" href="skeleton.css" media="screen" />
+        <link rel="icon" type="image/x-icon" href="./icons/favicon.ico">
+        <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+        type="application/javascript">
+        </script>
+        <script language="javascript" type="text/javascript" src="./mcrpabi.js"></script>
+        <input  id="amount" type="text" placeholder="amount">
+        <p>
+          <button id="btn-deposit" class="button" style="vertical-align:middle"><span>Deposit Funds</span></button>
+        </p>
+        <h1>Select your drink</h1>
+      </head>
+      <body>
+          <button id="btn-espresso" class="button" value="BuyingEspresso" style="vertical-align:middle"><span>Espresso <br />(0.01 eth)</span></button>
+            <button id="btn-latte" class="button" style="vertical-align:middle"><span>Latte <br />(0.01 eth)</span></button>
+          <button id="btn-americano" class="button" style="vertical-align:middle"><span>Americano <br />(0.01 eth)</span></button>
+          <p>
+            <h1>Total eth:</h1>
+            <h1 id="counter">0</h1>
+            <div>
+              <input  id="sign" type="text" placeholder="signature">
+            </div>
+            <div>
+              <input  id="msgHash" type="text" placeholder="hash">
+            </div>
+            <button id="btn-claim" class="button" style="vertical-align:middle"><span>Claim Payment<br /></span></button>
+          </p>
+        <script>
+          let count = 0;
+          let sign;
+          window.sign = sign;
+          let hash;
+          window.hash = hash;
+    
+          async function orderEspresso() {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+            const ord = await ethers.utils.id(document.getElementById("btn-espresso").value);
+            const ordBytes = ethers.utils.arrayify(ord);
+            const signature = await signer.signMessage(ordBytes);
+            count += 0.01;
+            
+            console.log("Your signature:\n", signature, "\nMessage Hash:\n", ord);
+            document.getElementById("counter").innerHTML = count;
+          }
+    
+          async function orderLatte() {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+            const ord = await ethers.utils.id(document.getElementById("btn-latte").value);
+            const ordBytes = ethers.utils.arrayify(ord);
+            const signature = await signer.signMessage(ordBytes);
+            count += 0.01;
+    
+            alert("Your signature:\n", signature, "\nMessage Hash:\n", ord);
+            document.getElementById("counter").innerHTML = count;
+          }
+    
+          async function orderAmericano() {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+            const ord = await ethers.utils.id(document.getElementById("btn-americano").value);
+            const ordBytes = ethers.utils.arrayify(ord);
+            const signature = await signer.signMessage(ordBytes);
+            count += 0.01;
+      
+            console.log("Your signature:\n", signature, "\nMessage Hash:\n", ord);
+            document.getElementById("counter").innerHTML = count;
+          }
+
+            const serverUrl = "your_server_url";
+            const appId = "your_app_id";
+            Moralis.start({ serverUrl, appId });
+
+            async function depositFunds() {
+                const web3 = await Moralis.enableWeb3();
+
+                const options = {type: "native", amount: Moralis.Units.ETH(document.getElementById("amount").value), receiver: "contract_address"};
+                let result = await Moralis.transfer(options);
+            }
+
+
+            async function claimPayment() {
+                const web3 = await Moralis.enableWeb3();
+
+                const options = {
+                    contractAddress: "contract_address",
+                    functionName: "claimPayment",
+                    abi: mcrpabi,
+                    params: {
+                    _signature: String(document.getElementById("sign").value),
+                    _msgHash: String(document.getElementById("msgHash").value),
+                    _amount: Moralis.Units.ETH(count)
+                    },
+                };
+                
+                const claim = await Moralis.executeFunction(options);
+                console.log(claim);
+            }
+
+            
+            document.getElementById("btn-claim").onclick = claimPayment;
+            document.getElementById("btn-deposit").onclick = depositFunds;
+          document.getElementById("btn-espresso").onclick = orderEspresso;
+          document.getElementById("btn-americano").onclick = orderAmericano;
+          document.getElementById("btn-latte").onclick = orderLatte;
+        </script>
+      </body>
+    </html>

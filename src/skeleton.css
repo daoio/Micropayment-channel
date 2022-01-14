@@ -1,0 +1,73 @@
+body {
+  text-align: center;
+  padding: 150px;
+
+}
+
+.btn-depost {
+  position: fixed;
+  right: 0;
+}
+
+h1 {
+  color: #130000;
+  font-size: 50px;
+}
+h1 {
+  color: #130000;
+}
+
+button {
+  padding: 15px 25px;
+  border: unset;
+  border-radius: 15px;
+  color: #130000;
+  z-index: 1;
+  background: #c5c5c5;
+  position: relative;
+  font-weight: 1000;
+  font-size: 17px;
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  transition: all 250ms;
+  overflow: hidden;
+ }
+ 
+ button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 15px;
+  background-color: #212121;
+  z-index: -1;
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(24, 0, 0, 0.27);
+  box-shadow: 4px 8px 19px -3px rgba(15, 0, 0, 0.27);
+  transition: all 250ms
+ }
+ 
+ button:hover {
+  color: #e8e8e8;
+ }
+ 
+ button:hover::before {
+  width: 100%;
+ }
+
+ input[type=text]{
+  width:5%;
+  border:2px solid #130000;
+  border-radius:15px;
+  margin:8px 0;
+  outline:none;
+  padding:8px;
+  box-sizing:border-box;
+  transition:.3s;
+}
+
+input[type=text]:focus{
+  border-color:#130000;
+  box-shadow:0 0 8px 0 #130000;
+}
