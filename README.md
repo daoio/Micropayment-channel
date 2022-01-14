@@ -1,5 +1,7 @@
 # Micropayment-channel
-Unidirectional micropayment channel for sending transactions off-chain and subsequent confirmation of final tx on-chain. With using of Moralis
+Unidirectional micropayment channel for sending transactions off-chain and subsequent confirmation of final tx on-chain. 
+
+//With using of Moralis amazing features\\\
 
 # Execution
 After the contract is deployed, it sets the addresses of the owner and recipient and the time of execution of the contract, then the owner deposits funds into the contract, makes off-chain transactions and signs them, sending the recipient his digital signature and the hash of the message signed by him.
