@@ -13,7 +13,6 @@ contract MicropaymentChannel is SignatureValidator {
 
     //EVENTS
     event PaymentClaimed(address indexed recipient, uint256 amount);
-    event Deposit(address indexed owner, uint256 amount);
 
     constructor (address payable _recipient, uint256 _seconds) {
         require(_recipient != msg.sender && _recipient != address(0));
@@ -25,12 +24,12 @@ contract MicropaymentChannel is SignatureValidator {
 
     // MODIFIERS
     modifier onlyOwner {
-        require(msg.sender == owner);
+        require(msg.sender == owner, "Access denied: You're not the owner");
         _;
     }
 
     modifier onlyRecipient {
-        require(msg.sender == recipient, "Access denied!");
+        require(msg.sender == recipient, "Access denied: You're not the recipient");
         _;
     }
 
